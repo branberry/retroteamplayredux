@@ -87,9 +87,9 @@ function GetLocalized(int)
 end
 GL = GetLocalized
 
-usermessage.Hook("lm", function(um)
-	local int = um:ReadShort()
-	local args = um:ReadString()
+net.Receive("lm", function()
+	local int = net.ReadInt(16)
+	local args = net.ReadString()
 	local str = GetLocalized(int)
 	if 0 < string.len(args) then
 		args = string.Explode("@", args)
@@ -100,9 +100,9 @@ usermessage.Hook("lm", function(um)
 	GAMEMODE:AddNotify(str, COLOR_WHITE, 4)
 end)
 
-usermessage.Hook("lmr", function(um)
-	local int = um:ReadShort()
-	local args = um:ReadString()
+net.Receive("lmr", function()
+	local int = net.ReadInt(16)
+	local args = net.ReadString()
 	local str = GetLocalized(int)
 	if 0 < string.len(args) then
 		args = string.Explode("@", args)
@@ -113,9 +113,9 @@ usermessage.Hook("lmr", function(um)
 	GAMEMODE:AddNotify(str, COLOR_RED, 4)
 end)
 
-usermessage.Hook("lmg", function(um)
-	local int = um:ReadShort()
-	local args = um:ReadString()
+net.Receive("lmg", function()
+	local int = net.ReadInt(16)
+	local args = net.ReadString()
 	local str = GetLocalized(int)
 	if 0 < string.len(args) then
 		args = string.Explode("@", args)

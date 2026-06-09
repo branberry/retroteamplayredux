@@ -10,7 +10,7 @@ function EFFECT:Init(data)
 		self.DieTime = 0
 	end
 
-	self.Entity:SetRenderBounds(Vector(-1000, -1000, -1000), Vector(1000, 1000, 1000))
+	self:SetRenderBounds(Vector(-1000, -1000, -1000), Vector(1000, 1000, 1000))
 
 	self.RingSize = 200
 end
@@ -20,9 +20,9 @@ function EFFECT:Think()
 		--self.Emitter:Finish()
 		return false
 	elseif self.Ent == MySelf then
-		self.Entity:SetPos(MySelf:GetShootPos() + MySelf:GetAimVector() * 16)
+		self:SetPos(MySelf:GetShootPos() + MySelf:GetAimVector() * 16)
 	else
-		self.Entity:SetPos(self.Ent:EyePos())
+		self:SetPos(self.Ent:EyePos())
 	end
 
 	return true

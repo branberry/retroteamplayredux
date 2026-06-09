@@ -14,11 +14,11 @@ ENT.ManaToSpawn = 500
 ENT.RespawnTime = 300
 
 function ENT:GetVHealth()
-	return self:GetNetworkedInt("health")
+	return self:GetNWInt("health")
 end
 
 function ENT:SetVHealth(__int__)
-	self:SetNetworkedInt("health", math.floor(__int__))
+	self:SetNWInt("health", math.floor(__int__))
 end
 
 function ENT:GetMaxVHealth()
@@ -26,11 +26,11 @@ function ENT:GetMaxVHealth()
 end
 
 function ENT:Team()
-	return self:GetNetworkedInt("teamid", 0)
+	return self:GetNWInt("teamid", 0)
 end
 
 function ENT:SetTeam(teamid)
-	self:SetNetworkedInt("teamid", teamid)
+	self:SetNWInt("teamid", teamid)
 	local col = team.GetColor(teamid)
 	self.PilotSeat:SetColor(col)
 	self.LeftGunnerSeat:SetColor(col)

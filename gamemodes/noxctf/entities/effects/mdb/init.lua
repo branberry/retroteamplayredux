@@ -30,7 +30,7 @@ function EFFECT:Init(data)
 
 	self.HitNormal = util.TraceLine({start=self.EndPos, endpos=self.EndPos + self.Dir}).HitNormal or Vector(0,0,1)
 
-	self.Entity:SetRenderBoundsWS(self.StartPos, self.EndPos, Vector(256, 256, 256))
+	self:SetRenderBoundsWS(self.StartPos, self.EndPos, Vector(256, 256, 256))
 
 	self.DieTime = RealTime() + 0.6
 

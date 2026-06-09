@@ -31,7 +31,7 @@ end
 
 function EFFECT:Think()
 	if CurTime() > self.Die then
-		local vOffset = self.Entity:GetPos()
+		local vOffset = self:GetPos()
 
 		local emitter = ParticleEmitter(vOffset)
 		emitter:SetNearClip(24, 32)

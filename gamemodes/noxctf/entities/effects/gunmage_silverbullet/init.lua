@@ -4,7 +4,7 @@ function EFFECT:Init(data)
 	self.StartPos = data:GetStart()
 	self.EndPos = data:GetOrigin()
 	self.Dir = self.EndPos - self.StartPos
-	self.Entity:SetRenderBoundsWS(self.StartPos, self.EndPos)
+	self:SetRenderBoundsWS(self.StartPos, self.EndPos)
 
 	self.TracerTime = 0.3
 

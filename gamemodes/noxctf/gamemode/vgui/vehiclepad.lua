@@ -1,6 +1,6 @@
 local VehicleTimers = {}
-usermessage.Hook("RecVehTimer", function(um)
-	VehicleTimers[um:ReadString()] = um:ReadFloat()
+net.Receive("RecVehTimer", function()
+	VehicleTimers[net.ReadString()] = net.ReadFloat()
 end)
 
 local function LabelThink(self)

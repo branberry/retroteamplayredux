@@ -4,30 +4,30 @@ function EFFECT:Init(data)
 
 	local max = Vector(3, 3, 3)
 	local min = max * -1
-	self.Entity:PhysicsInitBox(min, max)
-	self.Entity:SetCollisionBounds(min, max) 
-	self.Entity:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-	self.Entity:SetMoveType(MOVETYPE_VPHYSICS)
-	self.Entity:SetSolid(SOLID_VPHYSICS)
-	local phys = self.Entity:GetPhysicsObject()
+	self:PhysicsInitBox(min, max)
+	self:SetCollisionBounds(min, max) 
+	self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+	self:SetMoveType(MOVETYPE_VPHYSICS)
+	self:SetSolid(SOLID_VPHYSICS)
+	local phys = self:GetPhysicsObject()
 	if phys:IsValid() then
 		phys:Wake()
 		phys:ApplyForceCenter(dir * math.random(speed * 0.25, speed))
 	end
 	self.Living = RealTime() + 4
-	self.Emitter = ParticleEmitter(self.Entity:GetPos())
+	self.Emitter = ParticleEmitter(self:GetPos())
 	self.Emitter:SetNearClip(24, 32)
 end
 
 function EFFECT:Think()
-	self.Emitter:SetPos(self.Entity:GetPos())
-	local tr = util.TraceLine({start = self.Entity:GetPos(), endpos = self.Entity:GetPos() + self.Entity:GetVelocity():GetNormal() * 16, mask = MASK_NPCWORLDSTATIC})
+	self.Emitter:SetPos(self:GetPos())
+	local tr = util.TraceLine({start = self:GetPos(), endpos = self:GetPos() + self:GetVelocity():GetNormal() * 16, mask = MASK_NPCWORLDSTATIC})
 	if tr.Hit then
 		self.Living = -5
 	end
 
 	if self.Living < RealTime() then
-		local particle = self.Emitter:Add("effects/fire_cloud1", self.Entity:GetPos())
+		local particle = self.Emitter:Add("effects/fire_cloud1", self:GetPos())
 		particle:SetDieTime(0.75)
 		particle:SetStartAlpha(255)
 		particle:SetEndAlpha(20)
@@ -44,7 +44,7 @@ function EFFECT:Think()
 end
 
 function EFFECT:Render()
-	local particle = self.Emitter:Add("effects/fire_cloud1", self.Entity:GetPos() + VectorRand() * 4)
+	local particle = self.Emitter:Add("effects/fire_cloud1", self:GetPos() + VectorRand() * 4)
 	particle:SetDieTime(0.3)
 	particle:SetStartAlpha(255)
 	particle:SetEndAlpha(200)

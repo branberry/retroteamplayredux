@@ -113,10 +113,10 @@ function ENT:Attack_Slow()
 					self:EmitSound("npc/turret_floor/die.wav")
 				end
 
-				umsg.Start("recturrettarget")
-					umsg.Entity(ent)
-					umsg.Short(self:EntIndex())
-				umsg.End()
+				net.Start("recturrettarget")
+					net.WriteEntity(ent)
+					net.WriteInt(self:EntIndex(), 16)
+				net.Broadcast()
 
 				break
 			end
@@ -161,10 +161,10 @@ function ENT:Attack_Plasma()
 					self:EmitSound("npc/turret_floor/die.wav")
 				end
 
-				umsg.Start("recturrettarget")
-					umsg.Entity(ent)
-					umsg.Short(self:EntIndex())
-				umsg.End()
+				net.Start("recturrettarget")
+					net.WriteEntity(ent)
+					net.WriteInt(self:EntIndex(), 16)
+				net.Broadcast()
 
 				break
 			end
@@ -210,10 +210,10 @@ ENT["Attack_Magic Missiles"] = function(self)
 					self:EmitSound("npc/turret_floor/die.wav")
 				end
 
-				umsg.Start("recturrettarget")
-					umsg.Entity(ent)
-					umsg.Short(self:EntIndex())
-				umsg.End()
+				net.Start("recturrettarget")
+					net.WriteEntity(ent)
+					net.WriteInt(self:EntIndex(), 16)
+				net.Broadcast()
 
 				break
 			end
@@ -270,10 +270,10 @@ ENT["Attack_Pulse Cannon"] = function(self)
 
 			if self.AntiPulseSpam <= CurTime() then
 				self.AntiPulseSpam = CurTime() + 0.4
-				umsg.Start("recturrettarget")
-					umsg.Entity(ent)
-					umsg.Short(self:EntIndex())
-				umsg.End()
+				net.Start("recturrettarget")
+					net.WriteEntity(ent)
+					net.WriteInt(self:EntIndex(), 16)
+				net.Broadcast()
 			end
 
 			return

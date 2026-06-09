@@ -1,7 +1,7 @@
 include("shared.lua")
 
 function ENT:Initialize()
-	self.Entity:SetRenderBounds( Vector( -64, -64, -64), Vector( 64, 64, 64))
+	self:SetRenderBounds( Vector( -64, -64, -64), Vector( 64, 64, 64))
 	self:DrawShadow(false)
 	self:SetModel("models/props_debris/concrete_spawnplug001a.mdl")
 	self:SetMaterial("models/props/de_inferno/offwndwb_break")

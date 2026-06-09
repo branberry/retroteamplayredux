@@ -14,16 +14,16 @@ function EFFECT:Init(data)
 	if EFFECT_QUALITY < 1 then return end
 
 	self.StartTime = CurTime()
-	self.Entity:SetPos(data:GetEntity():GetPos() + Vector(0, 0, 60))
+	self:SetPos(data:GetEntity():GetPos() + Vector(0, 0, 60))
 
 	local col = team.GetColor(target:Team())
 	target:SetColor(Color(col.r, col.g, col.b, 255))
 
 	if render.GetDXLevel() < 90 then return end
 
-	local emitter = ParticleEmitter(self.Entity:GetPos())
+	local emitter = ParticleEmitter(self:GetPos())
 	for i=0, 2 do
-		local particle = emitter:Add("sprites/heatwave", self.Entity:GetPos() + (VectorRand() * 16) + Vector(0, 0, math.Rand(-16, -72)))
+		local particle = emitter:Add("sprites/heatwave", self:GetPos() + (VectorRand() * 16) + Vector(0, 0, math.Rand(-16, -72)))
 		particle:SetVelocity(VectorRand() * math.random(2, 4) + Vector(0, 0, math.Rand(32, 64)) + (target:GetVelocity() / 3))
 		particle:SetDieTime(1)
 		particle:SetStartAlpha(255)
@@ -33,7 +33,7 @@ function EFFECT:Init(data)
 		particle:SetColor(255, 255, 255)
 	end
 	for i=0, 1 do
-		local particle = emitter:Add("sprites/heatwave", self.Entity:GetPos() + (VectorRand() * 8) + Vector(0,0,math.Rand(-16, -72)))
+		local particle = emitter:Add("sprites/heatwave", self:GetPos() + (VectorRand() * 8) + Vector(0,0,math.Rand(-16, -72)))
 		particle:SetVelocity(Vector(0, 0, math.Rand(32, 64)) + (target:GetVelocity() / 3))
 		particle:SetDieTime(0.5)
 		particle:SetStartAlpha(255)

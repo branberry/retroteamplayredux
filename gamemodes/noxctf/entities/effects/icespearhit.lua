@@ -37,10 +37,10 @@ function EFFECT:Init(data)
 	end
 	emitter:Finish()
 
-	self.Entity:SetModel("models/Combine_Helicopter/helicopter_bomb01.mdl")
-	self.Entity:SetRenderBoundsWS(pos + Vector(-100, -100, -100), pos + Vector(100, 100, 100))
-	self.Entity:SetMaterial("models/shiny")
-	--self.Entity:SetAngles(VectorRand():Angle())
+	self:SetModel("models/Combine_Helicopter/helicopter_bomb01.mdl")
+	self:SetRenderBoundsWS(pos + Vector(-100, -100, -100), pos + Vector(100, 100, 100))
+	self:SetMaterial("models/shiny")
+	--self:SetAngles(VectorRand():Angle())
 
 	ExplosiveEffect(pos, 32, 20, DMGTYPE_ICE)
 end
@@ -52,7 +52,7 @@ function EFFECT:Think()
 end
 
 function EFFECT:Render()
-	local ent = self.Entity
+	local ent = self
 	local siz = self.Size * 0.3
 	
 	ent:SetModelScale(siz, 0)

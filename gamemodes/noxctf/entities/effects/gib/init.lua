@@ -8,17 +8,17 @@ function EFFECT:Init(data)
 
 	self.Emitter = ParticleEmitter(self:GetPos())
 
-	self.Entity:SetModel(GAMEMODE.GibModels[modelid])
+	self:SetModel(GAMEMODE.GibModels[modelid])
 
-	--self.Entity:PhysicsInit(SOLID_VPHYSICS)
-	self.Entity:PhysicsInitBox(Vector(-2, -2, -2), Vector(2, 2, 2))
-	self.Entity:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-	self.Entity:SetCollisionBounds(Vector(-2, -2, -2), Vector(2, 2, 2))
+	--self:PhysicsInit(SOLID_VPHYSICS)
+	self:PhysicsInitBox(Vector(-2, -2, -2), Vector(2, 2, 2))
+	self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+	self:SetCollisionBounds(Vector(-2, -2, -2), Vector(2, 2, 2))
 	if modelid > 4 then
-		self.Entity:SetMaterial("models/flesh")
+		self:SetMaterial("models/flesh")
 	end
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if phys:IsValid() then
 		phys:SetMaterial("zombieflesh")
 		phys:Wake()
@@ -38,24 +38,24 @@ function EFFECT:Think()
 		return false
 	end
 
-	self.Emitter:SetPos(self.Entity:GetPos())
+	self.Emitter:SetPos(self:GetPos())
 
 	return true
 end
 
 function EFFECT:Render()
-	self.Entity:DrawModel()
+	self:DrawModel()
 
 	if EFFECT_QUALITY < 1 or CurTime() < self.NextEmit then return end
 	self.NextEmit = CurTime() + 0.06 * EFFECT_IQUALITY
 
-	local vel = self.Entity:GetVelocity():Length()
+	local vel = self:GetVelocity():Length()
 
 	if 20 < vel or self.Effects == DMGTYPE_FIRE then
 		local emitter = self.Emitter
 
 		if vel > 20 then
-			local particle = emitter:Add("noxctf/sprite_bloodspray"..math.random(1,8), self.Entity:GetPos())
+			local particle = emitter:Add("noxctf/sprite_bloodspray"..math.random(1,8), self:GetPos())
 			particle:SetVelocity(VectorRand() * 16)
 			particle:SetDieTime(0.6)
 			particle:SetStartAlpha(255)
@@ -68,7 +68,7 @@ function EFFECT:Render()
 		end
 
 		if self.Effects == DMGTYPE_FIRE then
-			local particle = emitter:Add("effects/fire_embers"..math.random(1,3), self.Entity:GetPos())
+			local particle = emitter:Add("effects/fire_embers"..math.random(1,3), self:GetPos())
 			particle:SetDieTime(0.5)
 			particle:SetVelocity(VectorRand():GetNormal() * math.Rand(-8, 8) + Vector(0,0,8))
 			particle:SetStartAlpha(200)

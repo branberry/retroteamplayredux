@@ -12,7 +12,7 @@ function EFFECT:Init(data)
 	sound.Play("weapons/rpg/rocketfire1.wav", pos, 80, math.Rand(105, 115))
 	--sound.Play("weapons/stinger_fire1.wav", pos, 80, math.Rand(95, 105))
 
-	self.Entity:SetRenderBounds(Vector(-1000, -1000, -1000), Vector(1000, 1000, 1000))
+	self:SetRenderBounds(Vector(-1000, -1000, -1000), Vector(1000, 1000, 1000))
 
 	ExplosiveEffect(pos, 130, 130, DMGTYPE_FIRE)
 end

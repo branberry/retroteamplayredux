@@ -49,8 +49,8 @@ function ENT:Use(pl)
 	if self:GetYawSum(pl) >= 150 and self:GetYawSum(pl) <= 215 then --Make sure they are facing INFRONT of the machine.
 		self:SetSlotPlayer(pl)
 
-		umsg.Start("openslotwindow", pl)
-			umsg.Entity(self)
-		umsg.End()
+		net.Start("openslotwindow")
+			net.WriteEntity(self)
+		net.Send(pl)
 	end
 end

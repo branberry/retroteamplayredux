@@ -51,7 +51,7 @@ function EFFECT:Init(data)
 end
 
 function EFFECT:Think()
-	self.Entity:SetPos(MySelf:GetShootPos() + MySelf:GetAimVector() * 8)
+	self:SetPos(MySelf:GetShootPos() + MySelf:GetAimVector() * 8)
 	return RealTime() < self.DieTime
 end
 

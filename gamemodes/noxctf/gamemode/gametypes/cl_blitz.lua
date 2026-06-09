@@ -200,20 +200,20 @@ function GM:BLTZInitialize()
 		self:AddNotify("Ball has been reset!", color_white, 6)
 	end
 
-	usermessage.Hook("BallScored", function(um)
-		self:BallScored(um:ReadEntity(), um:ReadShort(), um:ReadEntity(), um:ReadEntity())
+	net.Receive("BallScored", function()
+		self:BallScored(net.ReadEntity(), net.ReadInt(16), net.ReadEntity(), net.ReadEntity())
 	end)
 
-	usermessage.Hook("BallReset", function(um)
+	net.Receive("BallReset", function()
 		self:BallReset()
 	end)
 
-	usermessage.Hook("BallTaken", function(um)
-		self:BallTaken(um:ReadEntity(), um:ReadShort())
+	net.Receive("BallTaken", function()
+		self:BallTaken(net.ReadEntity(), net.ReadInt(16))
 	end)
 
-	usermessage.Hook("BallDropped", function(um)
-		self:BallDropped(um:ReadEntity(), um:ReadShort())
+	net.Receive("BallDropped", function()
+		self:BallDropped(net.ReadEntity(), net.ReadInt(16))
 	end)
 
 	local function CreateShockwave(pos, ang)

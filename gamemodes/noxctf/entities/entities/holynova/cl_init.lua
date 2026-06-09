@@ -9,7 +9,7 @@ function ENT:Initialize()
 	self.PlaceTime = CurTime() + self.SetTime -- when it's placed
 	self.DeathTime = CurTime() + self.ExplodeTime -- when it blows up
 	
-	self.Entity:SetRenderBounds(Vector(-200, -200, -200), Vector(200, 200, 200))
+	self:SetRenderBounds(Vector(-200, -200, -200), Vector(200, 200, 200))
 	self.AmbientSound = CreateSound(self, "ambient/levels/labs/machine_ring_resonance_loop1.wav")
 
 end

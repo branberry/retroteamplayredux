@@ -40,23 +40,23 @@ function GM:BLTZInitialize()
 	end
 
 	function self:BallReset()
-		umsg.Start("BallReset")
-		umsg.End()
+		net.Start("BallReset")
+		net.Broadcast()
 	end
 
 	function self:BallTaken(pl)
-		umsg.Start("BallTaken")
-			umsg.Entity(pl)
-			umsg.Short(pl:GetTeamID())
-		umsg.End()
+		net.Start("BallTaken")
+			net.WriteEntity(pl)
+			net.WriteInt(pl:GetTeamID(), 16)
+		net.Broadcast()
 	end
 
 	function self:BallDropped(pl)
 		if pl and pl:IsValid() then
-			umsg.Start("BallDropped")
-				umsg.Entity(pl)
-				umsg.Short(pl:GetTeamID())
-			umsg.End()
+			net.Start("BallDropped")
+				net.WriteEntity(pl)
+				net.WriteInt(pl:GetTeamID(), 16)
+			net.Broadcast()
 		end
 	end
 

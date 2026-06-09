@@ -6,7 +6,7 @@ function EFFECT:Init(data)
 	pos = pos + normal * 2
 	self.Pos = pos
 	self.Norm = normal
-	self.Entity:SetRenderBoundsWS(pos + Vector(-2500, -2500, -2500), pos + Vector(2500, 2500, 2500))
+	self:SetRenderBoundsWS(pos + Vector(-2500, -2500, -2500), pos + Vector(2500, 2500, 2500))
 
 	sound.Play("nox/explosion0"..math.random(1,5)..".ogg", pos, 100, math.random(85, 110))
 

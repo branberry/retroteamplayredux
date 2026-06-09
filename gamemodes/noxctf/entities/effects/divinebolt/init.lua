@@ -11,7 +11,7 @@ function EFFECT:Init(data)
 		table.insert(self.tPos, Vector(math.Rand(-1, 1), math.Rand(-1, 1), 0):GetNormal())
 	end
 
-	self.Entity:SetRenderBounds(Vector(-90, -90, -90), Vector(90, 90, 2624))
+	self:SetRenderBounds(Vector(-90, -90, -90), Vector(90, 90, 2624))
 
 	sound.Play("weapons/physcannon/energy_sing_explosion2.wav", pos, 82 + power, math.Rand(100, 110) - power * 3)
 	ExplosiveEffect(pos, 64, 20, DMGTYPE_GENERIC)

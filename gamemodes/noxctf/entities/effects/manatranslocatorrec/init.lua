@@ -46,7 +46,7 @@ function EFFECT:Init(data)
 
 	emitter:Finish()
 
-	self.Entity:SetRenderBoundsWS(self.StartPos, self.HitPos, Vector(32, 32, 32))
+	self:SetRenderBoundsWS(self.StartPos, self.HitPos, Vector(32, 32, 32))
 end
 
 function EFFECT:Think()

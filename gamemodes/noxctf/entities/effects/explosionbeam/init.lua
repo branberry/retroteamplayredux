@@ -22,7 +22,7 @@ function EFFECT:Init(data)
 	end
 
 	sound.Play("nox/sunburst_explode.ogg", endpos, 90, math.Rand(95, 105))
-	self.Entity:SetRenderBoundsWS(startpos, endpos, Vector(32, 32, 32))
+	self:SetRenderBoundsWS(startpos, endpos, Vector(32, 32, 32))
 end
 
 function EFFECT:Think()

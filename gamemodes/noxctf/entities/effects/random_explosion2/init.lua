@@ -18,7 +18,7 @@ function EFFECT:Init(data)
 	self.EndPos = util.TraceLine({start=Pos, endpos=Pos + Vector(0, 0, -40000), mask=MASK_SOLID}).HitPos
 	local epos = Vector(Pos.x, Pos.y, Pos.z)
 	epos.z = epos.z + 5120
-	self.Entity:SetRenderBoundsWS(self:GetPos(), epos)
+	self:SetRenderBoundsWS(self:GetPos(), epos)
 
 	local teamid = data:GetScale()
 	self.Magnitude = data:GetMagnitude()

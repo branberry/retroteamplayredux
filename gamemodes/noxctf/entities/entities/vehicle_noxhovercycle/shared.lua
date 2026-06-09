@@ -23,11 +23,11 @@ ENT.NoProtectSeats = true
 util.PrecacheSound("Weapon_SMG1.NPC_Single")
 
 function ENT:GetVHealth()
-	return self:GetNetworkedInt("health")
+	return self:GetNWInt("health")
 end
 
 function ENT:SetVHealth(__int__)
-	self:SetNetworkedInt("health", math.floor(__int__))
+	self:SetNWInt("health", math.floor(__int__))
 end
 
 function ENT:GetMaxVHealth()
@@ -35,11 +35,11 @@ function ENT:GetMaxVHealth()
 end
 
 function ENT:Team()
-	return self:GetNetworkedInt("teamid", -1)
+	return self:GetNWInt("teamid", -1)
 end
 
 function ENT:SetTeam(__int__)
-	self:SetNetworkedInt("teamid", __int__)
+	self:SetNWInt("teamid", __int__)
 	self.TeamID = __int__
 	local c = team.GetColor(__int__)
 	self.PilotSeat:SetColor(Color(c.r, c.g, c.b, 255))

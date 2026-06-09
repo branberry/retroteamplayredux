@@ -3,7 +3,7 @@ function EFFECT:Init(data)
 	self.EndEnt = data:GetEntity()
 	self.Magnitude = data:GetMagnitude()
 	self.DeathTime = CurTime() + .2
-	self.Entity:SetRenderBounds(Vector(-1200, -1200, -1200), Vector(1200, 1200, 1200))
+	self:SetRenderBounds(Vector(-1200, -1200, -1200), Vector(1200, 1200, 1200))
 end
 
 function EFFECT:Think()

@@ -1,8 +1,8 @@
 include("shared.lua")
 
-usermessage.Hook("recturrettarget", function(um)
-	local target = um:ReadEntity()
-	local turret = Entity(um:ReadShort())
+net.Receive("recturrettarget", function()
+	local target = net.ReadEntity()
+	local turret = Entity(net.ReadInt(16))
 
 	if turret:IsValid() and target:IsValid() then
 		if turret.EndTargeting < CurTime() or turret.Target ~= target then
@@ -66,8 +66,8 @@ function ENT:OnRemove()
 	self.AmbientSound:Stop()
 end
 
-function ENT:Info(um)
-	local str = um:ReadString()
+function ENT:Info()
+	local str = net.ReadString()
 	if str == "deny" then
 		self.DeniedAccess = true
 		return

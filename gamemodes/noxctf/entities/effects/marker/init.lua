@@ -4,7 +4,7 @@ function EFFECT:Init(data)
 	local ent = data:GetEntity()
 	if ent ~= MySelf then return end
 	if data:GetMagnitude() == 1 then
-		self.Entity.Live = false
+		self.Live = false
 		if MARKEFFECT then
 			MARKEFFECT.Live = false
 			MARKEFFECT = nil
@@ -17,20 +17,20 @@ function EFFECT:Init(data)
 	if MARKEFFECT then
 		MARKEFFECT.Live = false
 	end
-	MARKEFFECT = self.Entity
-	self.Entity.Live = true
+	MARKEFFECT = self
+	self.Live = true
 	self.Rotation = 0
 end
 
 function EFFECT:Think()
-	return self.Entity.Live and MySelf:Alive()
+	return self.Live and MySelf:Alive()
 end
 
 local matGlow = Material("sprites/light_glow02_add")
 local matMark = Material("spellicons/marklocation1.png")
 
 function EFFECT:Render()
-	if not self.Entity.Live then return end
+	if not self.Live then return end
 	local pos = self.Pos
 
 	local qsize = 32 + math.sin(RealTime()*5) * 8

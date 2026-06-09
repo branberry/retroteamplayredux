@@ -1,6 +1,6 @@
 function EFFECT:Init(data)
 	self.DieTime = CurTime() + 0.5
-	self.Entity:SetRenderBounds(Vector(-90, -90, -90), Vector(90, 90, 90))
+	self:SetRenderBounds(Vector(-90, -90, -90), Vector(90, 90, 90))
 
 	local pos = data:GetOrigin()
 	self.vPos = pos

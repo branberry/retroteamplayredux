@@ -2,7 +2,7 @@ function EFFECT:Init(data)
 	local pos = data:GetOrigin()
 	local ent = data:GetEntity()
 
-	self.Entity:SetRenderBounds(Vector(-256, -256, -256), Vector(256, 256, 256))
+	self:SetRenderBounds(Vector(-256, -256, -256), Vector(256, 256, 256))
 
 	sound.Play("npc/combine_gunship/gunship_crashing1.wav",pos,150,175,1)
 	

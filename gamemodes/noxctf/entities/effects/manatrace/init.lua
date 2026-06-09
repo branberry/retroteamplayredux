@@ -49,13 +49,13 @@ function EFFECT:Init(data)
 	self.Col = self.Col or color_white
 	local c = self.Col
 
-	self.Entity:SetRenderBoundsWS(self.StartPos, self.EndPos, Vector(24, 24, 24))
-	self.Entity:SetModel("models/Weapons/w_bullet.mdl")
-	self.Entity:SetMaterial("models/shiny")
-	self.Entity:SetRenderMode(RENDERMODE_TRANSALPHA)
-	self.Entity:SetColor(Color(c.r, c.g, c.b, 255))
-	self.Entity:SetModelScale(1.5, 0)
-	self.Entity:SetAngles(self.Dir:Angle())
+	self:SetRenderBoundsWS(self.StartPos, self.EndPos, Vector(24, 24, 24))
+	self:SetModel("models/Weapons/w_bullet.mdl")
+	self:SetMaterial("models/shiny")
+	self:SetRenderMode(RENDERMODE_TRANSALPHA)
+	self:SetColor(Color(c.r, c.g, c.b, 255))
+	self:SetModelScale(1.5, 0)
+	self:SetAngles(self.Dir:Angle())
 end
 
 function EFFECT:Think()
@@ -78,7 +78,7 @@ function EFFECT:Render()
 		render.SetMaterial(matGlow)
 		local siz = math.Rand(16, 24)
 		render.DrawSprite(endpos, siz, siz, self.Col)
-		self.Entity:SetPos(endpos)
+		self:SetPos(endpos)
 	else
 		local c = self.Col
 		if not self.EndParticles then
@@ -100,9 +100,9 @@ function EFFECT:Render()
 		local siz = (self.DieTimeTwo - ct) * 32
 		render.SetMaterial(matGlow)
 		render.DrawSprite(self.EndPos, siz, siz, col)
-		self.Entity:SetColor(Color(c.r, c.g, c.b, math.min(255, (self.DieTimeTwo - ct) * 510)))
-		self.Entity:SetPos(self.EndPos)
+		self:SetColor(Color(c.r, c.g, c.b, math.min(255, (self.DieTimeTwo - ct) * 510)))
+		self:SetPos(self.EndPos)
 	end
 
-	self.Entity:DrawModel()
+	self:DrawModel()
 end

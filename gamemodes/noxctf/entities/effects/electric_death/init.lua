@@ -36,7 +36,7 @@ function EFFECT:Think()
 				phys:ApplyForceCenter(VectorRand() * 350)
 				if i == 1 then
 					local entpos = phys:GetPos()
-					self.Entity:SetPos(entpos)
+					self:SetPos(entpos)
 					self.Emitter:SetPos(entpos)
 				end
 			end

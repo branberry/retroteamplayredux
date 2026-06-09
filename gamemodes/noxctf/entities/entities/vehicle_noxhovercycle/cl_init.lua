@@ -61,7 +61,7 @@ function ENT:DrawHUD(seat)
 	surface.SetDrawColor(255, 255, 255, 255)
 	surface.DrawOutlinedRect(x - w * 0.1, y, w * 0.2, h * 0.04)
 	draw.SimpleText(health.." / "..maxhealth, "teamplaytargetidsmall", x, y + hhh * 0.5, COLOR_CYAN, TEXT_ALIGN_CENTER)
-	local gun = self:GetNetworkedEntity("gun", NULL)
+	local gun = self:GetNWEntity("gun", NULL)
 	if gun:IsValid() then
 		local filt = ents.FindByClass("projectile_*")
 		table.insert(filt, gun)

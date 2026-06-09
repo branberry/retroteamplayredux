@@ -284,11 +284,11 @@ end
 
 function ENT:UpdateCrew()
 	if self:IsValid() then
-		umsg.Start("RecVD")
-			umsg.Entity(self)
-			umsg.Entity(self.LastDriver)
-			umsg.Entity(self.LastTailGunner)
-		umsg.End()
+		net.Start("RecVD")
+			net.WriteEntity(self)
+			net.WriteEntity(self.LastDriver)
+			net.WriteEntity(self.LastTailGunner)
+		net.Broadcast()
 	end
 end
 
@@ -322,8 +322,8 @@ function ENT:Think()
 		self:TakeSpecialDamage(math.ceil(data.Speed * 0.04), DMGTYPE_IMPACT, NULL, NULL, data.HitPos)
 	end
 
-	if self.NextThrustUpdate < CurTime() and self:GetNetworkedFloat("thrust", 0) ~= self.Thrust then
-		self:SetNetworkedFloat("thrust", self.Thrust)
+	if self.NextThrustUpdate < CurTime() and self:GetNWFloat("thrust", 0) ~= self.Thrust then
+		self:SetNWFloat("thrust", self.Thrust)
 		self.NextThrustUpdate = CurTime() + 0.5
 	end
 

@@ -65,7 +65,7 @@ function ENT:Think()
 end
 
 function ENT:SetThrust(fThrust)
-	self:SetNetworkedFloat("thrust", fThrust)
+	self:SetNWFloat("thrust", fThrust)
 end
 
 function ENT:OnRemove()
@@ -201,11 +201,11 @@ function ENT:Draw()
 	end]]
 end
 
-usermessage.Hook("RecVD", function(um)
-	local ent = um:ReadEntity()
+net.Receive("RecVD", function()
+	local ent = net.ReadEntity()
 
 	if ent:IsValid() then
-		ent.Pilot = um:ReadEntity() or NULL
-		ent.TailGunner = um:ReadEntity() or NULL
+		ent.Pilot = net.ReadEntity() or NULL
+		ent.TailGunner = net.ReadEntity() or NULL
 	end
 end)

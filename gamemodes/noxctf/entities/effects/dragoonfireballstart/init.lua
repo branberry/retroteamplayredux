@@ -14,7 +14,7 @@ end
 
 function EFFECT:Think()
 	if self.Ent:IsValid() then
-		self.Entity:SetPos(self.Ent:GetShootPos() + self.Ent:GetAimVector() * 16)
+		self:SetPos(self.Ent:GetShootPos() + self.Ent:GetAimVector() * 16)
 	end
 
 	if self.DieTime <= CurTime() then

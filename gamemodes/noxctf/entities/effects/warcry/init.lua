@@ -13,7 +13,7 @@ function EFFECT:Init(data)
 	self.Refract = 0
 	self.Size = 64
 
-	self.Entity:SetRenderBounds(Vector(-1536, -1536, -1536), Vector(1536, 1536, 1536))
+	self:SetRenderBounds(Vector(-1536, -1536, -1536), Vector(1536, 1536, 1536))
 end
 
 function EFFECT:Think()
@@ -28,7 +28,7 @@ function EFFECT:Render()
 	local Distance = EyePos():Distance(mypos)
 	local Pos = mypos + (MySelf:EyePos() - mypos):GetNormal() * Distance * (self.Refract ^ 0.3) * 0.8*/
 
-	local Pos = self.Entity:GetPos()
+	local Pos = self:GetPos()
 
 	matRefraction:SetFloat("$refractamount", math.sin(self.Refract * math.pi) * 0.75)
 	render.SetMaterial(matRefraction)

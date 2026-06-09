@@ -18,13 +18,13 @@ local meta = FindMetaTable("Entity")
 if not meta then return end
 
 function meta:ResetLuaAnimation(sAnimation, fTime, fPower, fTimeScale)
-	--[[umsg.Start("resetluaanim")
-		umsg.Entity(self)
-		umsg.String(sAnimation)
-		umsg.Float(fTime or -1)
-		umsg.Float(fPower or -1)
-		umsg.Float(fTimeScale or -1)
-	umsg.End()]]
+	--[[net.Start("resetluaanim")
+		net.WriteEntity(self)
+		net.WriteString(sAnimation)
+		net.WriteFloat(fTime or -1)
+		net.WriteFloat(fPower or -1)
+		net.WriteFloat(fTimeScale or -1)
+	net.Broadcast()]]
 	net.Start("bal_reset")
 		net.WriteEntity(self)
 		net.WriteString(sAnimation)
@@ -35,13 +35,13 @@ function meta:ResetLuaAnimation(sAnimation, fTime, fPower, fTimeScale)
 end
 
 function meta:SetLuaAnimation(sAnimation, fTime, fPower, fTimeScale)
-	--[[umsg.Start("setluaanim")
-		umsg.Entity(self)
-		umsg.String(sAnimation)
-		umsg.Float(fTime or -1)
-		umsg.Float(fPower or -1)
-		umsg.Float(fTimeScale or -1)
-	umsg.End()]]
+	--[[net.Start("setluaanim")
+		net.WriteEntity(self)
+		net.WriteString(sAnimation)
+		net.WriteFloat(fTime or -1)
+		net.WriteFloat(fPower or -1)
+		net.WriteFloat(fTimeScale or -1)
+	net.Broadcast()]]
 	net.Start("bal_set")
 		net.WriteEntity(self)
 		net.WriteString(sAnimation)
@@ -52,11 +52,11 @@ function meta:SetLuaAnimation(sAnimation, fTime, fPower, fTimeScale)
 end
 
 function meta:StopLuaAnimation(sAnimation, fTime)
-	--[[umsg.Start("stopluaanim")
-		umsg.Entity(self)
-		umsg.String(sAnimation)
-		umsg.Float(fTime or 0)
-	umsg.End()]]
+	--[[net.Start("stopluaanim")
+		net.WriteEntity(self)
+		net.WriteString(sAnimation)
+		net.WriteFloat(fTime or 0)
+	net.Broadcast()]]
 	net.Start("bal_stop")
 		net.WriteEntity(self)
 		net.WriteString(sAnimation)
@@ -65,11 +65,11 @@ function meta:StopLuaAnimation(sAnimation, fTime)
 end
 
 function meta:StopLuaAnimationGroup(sAnimation, fTime)
-	--[[umsg.Start("stopluaanimgp")
-		umsg.Entity(self)
-		umsg.String(sAnimation)
-		umsg.Float(fTime or 0)
-	umsg.End()]]
+	--[[net.Start("stopluaanimgp")
+		net.WriteEntity(self)
+		net.WriteString(sAnimation)
+		net.WriteFloat(fTime or 0)
+	net.Broadcast()]]
 	net.Start("bal_stopgroup")
 		net.WriteEntity(self)
 		net.WriteString(sAnimation)
@@ -78,10 +78,10 @@ function meta:StopLuaAnimationGroup(sAnimation, fTime)
 end
 
 function meta:StopAllLuaAnimations(fTime)
-	--[[umsg.Start("stopallluaanim")
-		umsg.Entity(self)
-		umsg.Float(fTime or 0)
-	umsg.End()]]
+	--[[net.Start("stopallluaanim")
+		net.WriteEntity(self)
+		net.WriteFloat(fTime or 0)
+	net.Broadcast()]]
 	net.Start("bal_stopall")
 		net.WriteEntity(self)
 		net.WriteFloat(fTime or 0)

@@ -54,10 +54,10 @@ hook.Add("Initialize", "GameTypeVotingInitialize", function()
 			GAMEMODE.GameTypeVotedVotes[uid] = nil
 			GAMEMODE.GameTypeVoted[uid] = nil
 
-			umsg.Start("recgtnumvotes")
-				umsg.String(votedalready)
-				umsg.Short(GAMEMODE.GameTypeVotes[votedalready])
-			umsg.End()
+			net.Start("recgtnumvotes")
+				net.WriteString(votedalready)
+				net.WriteInt(GAMEMODE.GameTypeVotes[votedalready], 16)
+			net.Broadcast()
 		end
 
 		GAMEMODE.GameTypeVoted[uid] = arguments
@@ -78,9 +78,9 @@ hook.Add("Initialize", "GameTypeVotingInitialize", function()
 			PrintMessage(HUD_PRINTTALK, sender:Name().." placed "..votes.." votes for "..arguments..".")
 		end
 
-		umsg.Start("recgtnumvotes")
-			umsg.String(arguments)
-			umsg.Short(GAMEMODE.GameTypeVotes[arguments])
-		umsg.End()
+		net.Start("recgtnumvotes")
+			net.WriteString(arguments)
+			net.WriteInt(GAMEMODE.GameTypeVotes[arguments], 16)
+		net.Broadcast()
 	end)
 end)

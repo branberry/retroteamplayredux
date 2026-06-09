@@ -4,51 +4,51 @@ include("sh_boneanimlib.lua")
 
 local ANIMATIONFADEOUTTIME = 0.125
 
---[[usermessage.Hook("resetluaanim", function(um)
-	local ent = um:ReadEntity()
-	local anim = um:ReadString()
-	local time = um:ReadFloat()
-	local power = um:ReadFloat()
-	local timescale = um:ReadFloat()
+--[[net.Receive("resetluaanim", function()
+	local ent = net.ReadEntity()
+	local anim = net.ReadString()
+	local time = net.ReadFloat()
+	local power = net.ReadFloat()
+	local timescale = net.ReadFloat()
 	if ent:IsValid() then
 		ent:ResetLuaAnimation(anim, time ~= -1 and time, power ~= -1 and power, timescale ~= -1 and timescale)
 	end
 end)
 
-usermessage.Hook("setluaanim", function(um)
-	local ent = um:ReadEntity()
-	local anim = um:ReadString()
-	local time = um:ReadFloat()
-	local power = um:ReadFloat()
-	local timescale = um:ReadFloat()
+net.Receive("setluaanim", function()
+	local ent = net.ReadEntity()
+	local anim = net.ReadString()
+	local time = net.ReadFloat()
+	local power = net.ReadFloat()
+	local timescale = net.ReadFloat()
 	if ent:IsValid() then
 		ent:SetLuaAnimation(anim, time ~= -1 and time, power ~= -1 and power, timescale ~= -1 and timescale)
 	end
 end)
 
-usermessage.Hook("stopluaanim", function(um)
-	local ent = um:ReadEntity()
-	local anim = um:ReadString()
-	local tim = um:ReadFloat()
+net.Receive("stopluaanim", function()
+	local ent = net.ReadEntity()
+	local anim = net.ReadString()
+	local tim = net.ReadFloat()
 	if tim == 0 then tim = nil end
 	if ent:IsValid() then
 		ent:StopLuaAnimation(anim, tim)
 	end
 end)
 
-usermessage.Hook("stopluaanimgp", function(um)
-	local ent = um:ReadEntity()
-	local animgroup = um:ReadString()
-	local tim = um:ReadFloat()
+net.Receive("stopluaanimgp", function()
+	local ent = net.ReadEntity()
+	local animgroup = net.ReadString()
+	local tim = net.ReadFloat()
 	if tim == 0 then tim = nil end
 	if ent:IsValid() then
 		ent:StopLuaAnimationGroup(animgroup, tim)
 	end
 end)
 
-usermessage.Hook("stopallluaanim", function(um)
-	local ent = um:ReadEntity()
-	local tim = um:ReadFloat()
+net.Receive("stopallluaanim", function()
+	local ent = net.ReadEntity()
+	local tim = net.ReadFloat()
 	if tim == 0 then tim = nil end
 	if ent:IsValid() then
 		ent:StopAllLuaAnimations(tim)

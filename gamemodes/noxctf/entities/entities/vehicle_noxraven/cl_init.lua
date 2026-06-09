@@ -62,7 +62,7 @@ function ENT:CalcViewFunc(seat, ply, origin, angles, fov, znear, zfar)
 end
 
 function ENT:SetThrust(fThrust)
-	self:SetNetworkedFloat("thrust", fThrust)
+	self:SetNWFloat("thrust", fThrust)
 end
 
 function ENT:OnRemove()

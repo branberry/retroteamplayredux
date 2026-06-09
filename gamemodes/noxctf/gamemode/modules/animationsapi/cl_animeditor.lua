@@ -594,7 +594,7 @@ local function IsMouseOverPanel()
 	local mouseX = gui.MouseX()
 	local mouseY = gui.MouseY()
 	for i,v in pairs(topLevelPanels) do
-		if ValidPanel(v) && v:IsVisible() then
+		if IsValid(v) && v:IsVisible() then
 		
 			local bChild = IsChildOfHiddenParent(v)
 			if !bChild then
@@ -1404,7 +1404,7 @@ local needsUpdate = true
 function SLIDERS:SetFrameData()
 	--print(selectedFrame,selectedBone,selectedFrame:GetData().BoneInfo[selectedBone])
 	needsUpdate = false
-	if !ValidPanel(selectedFrame) || !selectedBone || !selectedFrame:GetData().BoneInfo[selectedBone] then 
+	if !IsValid(selectedFrame) || !selectedBone || !selectedFrame:GetData().BoneInfo[selectedBone] then 
 	
 		for i,v in pairs(self.Sliders) do
 			v:SetValue(0)
@@ -1423,7 +1423,7 @@ function SLIDERS:Dragged3D(changeAmt,moveType)
 	self.Sliders[moveType]:SetValue(ChangeAmt)
 end
 function SLIDERS:OnSliderChanged(moveType,value)
-	if !ValidPanel(selectedFrame) || !table.HasValue(boneList[selectedBoneSet],selectedBone) then return end --no keyframe/bone selected
+	if !IsValid(selectedFrame) || !table.HasValue(boneList[selectedBoneSet],selectedBone) then return end --no keyframe/bone selected
 	if (tonumber(value) == 0 && selectedFrame:GetData().BoneInfo[selectedBone] == nil) || !needsUpdate then return end
 	
 	--[[if selectedFrame:GetAnimationIndex() > 1 then

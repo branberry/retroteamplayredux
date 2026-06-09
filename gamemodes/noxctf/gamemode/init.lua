@@ -66,6 +66,23 @@ include("gametypes/ctf.lua")
 include("gametypes/holdtheflag.lua")
 include("gametypes/kingofthehill.lua")
 
+-- Pool the names of every net message this gamemode sends (required by the net library).
+local NetworkStrings = {
+	"BallDropped", "BallReset", "BallScored", "BallTaken",
+	"DI", "EndG",
+	"FCap", "FDro", "FRet", "FTak", "FlagReturnEffect",
+	"NextRespawn",
+	"PlayerKilled", "PlayerKilledByPlayer", "PlayerKilledByPlayers", "PlayerKilledSelf",
+	"RecDSD", "RecFlagInfo", "RecGameState", "RecInfo", "RecVD", "RecVehTimer",
+	"SI", "SLM",
+	"cusges", "lm", "lmg", "lmr",
+	"openslotwindow", "recgtnumvotes", "recturrettarget",
+	"resetluaanim", "setluaanim", "sp", "stopallluaanim", "stopluaanim", "stopluaanimgp",
+}
+for _, name in ipairs(NetworkStrings) do
+	util.AddNetworkString(name)
+end
+
 -- TODO: Check vehicle pad vgui to make sure that vehicle icons aren't bigger than the text on small resolutions.
 -- TODO: Hit effects for melee and arrows.
 -- TODO: Draw a quad to signify team barriers in build mode.
@@ -422,7 +439,7 @@ function GM:InitPostEntity()
 				if ent:IsValid() then
 					ent:SetPos(Vector(tonumber(expstuff[2]), tonumber(expstuff[3]), tonumber(expstuff[4])))
 					for i=5, #expstuff do
-						local kv = string.Explode("§", expstuff[i])
+						local kv = string.Explode("?", expstuff[i])
 						ent:SetKeyValue(kv[1], kv[2])
 					end
 					ent:Spawn()
@@ -1240,21 +1257,21 @@ function GM:PlayerUse(pl, entity)
 end
 
 function GM:FlagTaken(selfteam, byplayer)
-	umsg.Start("FTak")
-		umsg.Short(selfteam)
-		umsg.String(byplayer:Name())
-	umsg.End()
+	net.Start("FTak")
+		net.WriteInt(selfteam, 16)
+		net.WriteString(byplayer:Name())
+	net.Broadcast()
 end
 
 function GM:FlagDropped(selfteam, byplayer)
-	umsg.Start("FDro")
-		umsg.Short(selfteam)
+	net.Start("FDro")
+		net.WriteInt(selfteam, 16)
 		if type(byplayer) == "string" then
-			umsg.String(byplayer)
+			net.WriteString(byplayer)
 		else
-			umsg.String(byplayer:Name())
+			net.WriteString(byplayer:Name())
 		end
-	umsg.End()
+	net.Broadcast()
 end
 
 CTFCaptureAwards = {}
@@ -1291,11 +1308,11 @@ function GM:FlagCaptured(carrier, selfteam, otherteam)
 		end
 	end
 
-	umsg.Start("FCap")
-		umsg.String(carrier:Name())
-		umsg.Short(selfteam)
-		umsg.Short(otherteam)
-	umsg.End()
+	net.Start("FCap")
+		net.WriteString(carrier:Name())
+		net.WriteInt(selfteam, 16)
+		net.WriteInt(otherteam, 16)
+	net.Broadcast()
 
 	if OVERTIME or MAX_SCORE <= team.GetScore(selfteam) then
 		self:EndGame(selfteam, {})
@@ -1381,23 +1398,22 @@ function GM:EndGame(winner, slaves)
 		pl:GodEnable()
 	end
 
-	umsg.Start("EndG")
-		umsg.Short(winner)
-	umsg.End()
+	net.Start("EndG")
+		net.WriteInt(winner, 16)
+	net.Broadcast()
 
 	if NDB then NDB.GlobalSave() end
 
 	hook.Add("PlayerSpawn", "FREEZENEW", function(p) p:Freeze(true) p:GodEnable() end)
 end
 
-umsg.PoolString("Auto-return")
 function GM:FlagReturned(pl, myteam, faraway)
 	if not pl then
-		umsg.Start("FRet")
-			umsg.String("Auto-return")
-			umsg.Short(myteam)
-			umsg.Bool(faraway)
-		umsg.End()
+		net.Start("FRet")
+			net.WriteString("Auto-return")
+			net.WriteInt(myteam, 16)
+			net.WriteBool(faraway)
+		net.Broadcast()
 		return
 	end
 
@@ -1410,11 +1426,11 @@ function GM:FlagReturned(pl, myteam, faraway)
 		pl:AddDefense(1)
 	end
 
-	umsg.Start("FRet")
-		umsg.String(pl:Name())
-		umsg.Short(myteam)
-		umsg.Bool(faraway)
-	umsg.End()
+	net.Start("FRet")
+		net.WriteString(pl:Name())
+		net.WriteInt(myteam, 16)
+		net.WriteBool(faraway)
+	net.Broadcast()
 end
 
 function GM:PlayerDeathSound()
@@ -1555,9 +1571,9 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 	pl.LastDeath = CurTime()
 	pl:AddDeaths(1)
 
-	umsg.Start("NextRespawn", pl)
-		umsg.Float(pl.NextSpawnTime)
-	umsg.End()
+	net.Start("NextRespawn")
+		net.WriteFloat(pl.NextSpawnTime)
+	net.Send(pl)
 
 	if attacker == pl then
 		pl:AddFrags(-1)
@@ -1738,31 +1754,31 @@ function GM:PlayerDeath2(Victim, Inflictor, Attacker, Attacker2, isassist)
 
 	local inflictorclass = Inflictor.DisplayClass or Inflictor:GetClass()
 	if Attacker == Victim then
-		umsg.Start("PlayerKilledSelf")
-			umsg.Entity(Victim)
-			umsg.String(inflictorclass)
-		umsg.End()
+		net.Start("PlayerKilledSelf")
+			net.WriteEntity(Victim)
+			net.WriteString(inflictorclass)
+		net.Broadcast()
 	elseif Attacker:IsPlayer() then
 		if isassist then
-			umsg.Start("PlayerKilledByPlayers")
-				umsg.Entity(Victim)
-				umsg.String(inflictorclass)
-				umsg.Entity(Attacker)
-				umsg.Entity(Attacker2)
-			umsg.End()
+			net.Start("PlayerKilledByPlayers")
+				net.WriteEntity(Victim)
+				net.WriteString(inflictorclass)
+				net.WriteEntity(Attacker)
+				net.WriteEntity(Attacker2)
+			net.Broadcast()
 		else
-			umsg.Start("PlayerKilledByPlayer")
-				umsg.Entity(Victim)
-				umsg.String(inflictorclass)
-				umsg.Entity(Attacker)
-			umsg.End()
+			net.Start("PlayerKilledByPlayer")
+				net.WriteEntity(Victim)
+				net.WriteString(inflictorclass)
+				net.WriteEntity(Attacker)
+			net.Broadcast()
 		end
 	else
-		umsg.Start("PlayerKilled")
-			umsg.Entity(Victim)
-			umsg.String(inflictorclass)
-			umsg.String(Attacker:GetClass())
-		umsg.End()
+		net.Start("PlayerKilled")
+			net.WriteEntity(Victim)
+			net.WriteString(inflictorclass)
+			net.WriteString(Attacker:GetClass())
+		net.Broadcast()
 	end
 end
 
@@ -1841,11 +1857,11 @@ local function DelayFeed(self, pl)
 		if self.FlagEntity then
 			for i in pairs(team.TeamInfo) do
 				if i < 9 and 0 < i then
-					umsg.Start("RecFlagInfo", pl)
-						umsg.Short(i)
-						umsg.Vector(team.TeamInfo[i].FlagPoint)
-						umsg.Entity(team.TeamInfo[i].Flag)
-					umsg.End()
+					net.Start("RecFlagInfo")
+						net.WriteInt(i, 16)
+						net.WriteVector(team.TeamInfo[i].FlagPoint)
+						net.WriteEntity(team.TeamInfo[i].Flag)
+					net.Send(pl)
 				end
 			end
 		end
@@ -2698,10 +2714,10 @@ concommand.Add("CreateVehicle", function(sender, command, arguments)
 		util.Effect("building_spawn", effectdata)
 
 		sender.VehicleTimers[tab.Name] = CurTime() + tab.RespawnTime
-		umsg.Start("RecVehTimer", sender)
-			umsg.String(tab.Name)
-			umsg.Float(sender.VehicleTimers[tab.Name])
-		umsg.End()
+		net.Start("RecVehTimer")
+			net.WriteString(tab.Name)
+			net.WriteFloat(sender.VehicleTimers[tab.Name])
+		net.Send(sender)
 
 		sender:PrintMessage(HUD_PRINTCENTER, tab.Name.." created!")
 	end
@@ -2715,10 +2731,10 @@ concommand.Add("ReqInfo", function(sender, command, arguments)
 		local str = ent:Info(sender)
 		if str and str ~= sender.LastInfo[ent] then
 			sender.LastInfo[ent] = str
-			umsg.Start("RecInfo", sender)
-				umsg.Entity(ent)
-				umsg.String(str)
-			umsg.End()
+			net.Start("RecInfo")
+				net.WriteEntity(ent)
+				net.WriteString(str)
+			net.Send(sender)
 		end
 	end
 end)

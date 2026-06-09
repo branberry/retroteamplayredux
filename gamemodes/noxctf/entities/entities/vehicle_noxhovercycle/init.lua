@@ -110,7 +110,7 @@ function ENT:CreateChildren()
 		gun.VehicleParent = self
 		gun:SetParent(self)
 		self.Gun = gun
-		self:SetNetworkedEntity("gun", gun)
+		self:SetNWEntity("gun", gun)
 	end
 end
 

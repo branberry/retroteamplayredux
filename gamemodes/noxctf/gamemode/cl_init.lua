@@ -478,9 +478,9 @@ function GM:CalcViewTaunt(pl, origin, angles, fov, zclose, zfar)
 	origin:Set(tr.HitPos + tr.HitNormal * 2)
 end
 
-usermessage.Hook("SLM", function(um)
-	MySelf.Mana = um:ReadFloat()
-	MySelf.ManaBase = um:ReadFloat()
+net.Receive("SLM", function()
+	MySelf.Mana = net.ReadFloat()
+	MySelf.ManaBase = net.ReadFloat()
 end)
 
 function GM:PlayerBindPress(pl, bind, wasin)
@@ -1346,8 +1346,8 @@ function InitTeams(teamtab)
 end
 
 CURRENT_SPELL = "none"
-usermessage.Hook("sp", function(um)
-	gamemode.Call("LocalPlayerSpawn", um:ReadShort())
+net.Receive("sp", function()
+	gamemode.Call("LocalPlayerSpawn", net.ReadInt(16))
 end)
 
 function GM:LocalPlayerSpawn(classid)
@@ -1444,17 +1444,17 @@ function GM:SaveSpellSheet(class)
 	file.Write(DIRECTORY .."/noxspellshortcuts_"..string.lower(CLASSES[class].Name)..".txt", table.concat(tab, ":"))
 end
 
-usermessage.Hook("FCap", function(um)
-	local playername = um:ReadString()
-	local selfteam = um:ReadShort()
-	local otherteam = um:ReadShort()
+net.Receive("FCap", function()
+	local playername = net.ReadString()
+	local selfteam = net.ReadInt(16)
+	local otherteam = net.ReadInt(16)
 
 	GAMEMODE:CenterPrintAll(playername.." of "..team.GetName(selfteam).." captured the "..team.GetName(otherteam).." flag!~snox/flagcaptured.wav", COLOR_RED, 6)
 end)
 
-usermessage.Hook("FTak", function(um)
-	local selfteam = um:ReadShort()
-	local playername = um:ReadString()
+net.Receive("FTak", function()
+	local selfteam = net.ReadInt(16)
+	local playername = net.ReadString()
 	if selfteam == MySelf:Team() then
 		GAMEMODE:CenterPrintAll(playername.." took your flag!!", COLOR_RED)
 	else
@@ -1464,9 +1464,9 @@ usermessage.Hook("FTak", function(um)
 	surface.PlaySound("nox/nflagpickup.ogg")
 end)
 
-usermessage.Hook("FDro", function(um)
-	local selfteam = um:ReadShort()
-	local playername = um:ReadString()
+net.Receive("FDro", function()
+	local selfteam = net.ReadInt(16)
+	local playername = net.ReadString()
 	if selfteam == MySelf:Team() then
 		GAMEMODE:CenterPrint(playername.." dropped your flag!", COLOR_RED)
 	else
@@ -1476,10 +1476,10 @@ usermessage.Hook("FDro", function(um)
 	surface.PlaySound("nox/nflagdrop.ogg")
 end)
 
-usermessage.Hook("FRet", function(um)
-	local playername = um:ReadString()
-	local selfteam = um:ReadShort()
-	local faraway = um:ReadBool()
+net.Receive("FRet", function()
+	local playername = net.ReadString()
+	local selfteam = net.ReadInt(16)
+	local faraway = net.ReadBool()
 	if faraway then
 		GAMEMODE:CenterPrint(playername.." returned the "..team.GetName(selfteam).." flag.")
 	else
@@ -1489,8 +1489,8 @@ usermessage.Hook("FRet", function(um)
 	surface.PlaySound("nox/nflagreturn.ogg")
 end)
 
-usermessage.Hook("EndG", function(um)
-	local winner = um:ReadShort()
+net.Receive("EndG", function()
+	local winner = net.ReadInt(16)
 	END_GAME = true
 	NEXT_MAP = CurTime() + 35
 	if 0 < winner then
@@ -1505,25 +1505,25 @@ usermessage.Hook("EndG", function(um)
 	function GAMEMODE:HUDPaintBackground() end
 end)
 
-usermessage.Hook("FlagReturnEffect", function(um)
+net.Receive("FlagReturnEffect", function()
 	local effectdata = EffectData()
-		effectdata:SetOrigin(um:ReadVector())
-		effectdata:SetStart(um:ReadVector())
-		effectdata:SetScale(um:ReadShort())
+		effectdata:SetOrigin(net.ReadVector())
+		effectdata:SetStart(net.ReadVector())
+		effectdata:SetScale(net.ReadInt(16))
 	util.Effect("flagreturn", effectdata)
 end)
 
-usermessage.Hook("RecFlagInfo", function(um)
-	local index = um:ReadShort()
-	team.TeamInfo[index].FlagPoint = um:ReadVector()
-	local flag = um:ReadEntity()
+net.Receive("RecFlagInfo", function()
+	local index = net.ReadInt(16)
+	team.TeamInfo[index].FlagPoint = net.ReadVector()
+	local flag = net.ReadEntity()
 	team.TeamInfo[index].Flag = flag
 	flag:SetTeamID(index)
 end)
 
-function DI(um)
-	local spellid = um:ReadShort()
-	local tTime = um:ReadFloat()
+function DI()
+	local spellid = net.ReadInt(16)
+	local tTime = net.ReadFloat()
 	if tTime == 0 then
 		DelayIcons[spellid] = nil
 	elseif 0 < tTime then
@@ -1533,7 +1533,7 @@ function DI(um)
 		DelayIcons[spellid] = {StartTime = CurTime(), EndTime = -10}
 	end
 end
-usermessage.Hook("DI", DI)
+net.Receive("DI", DI)
 
 function gib()
 	local effectdata = EffectData()
@@ -1542,14 +1542,14 @@ function gib()
 	util.Effect("gib_player", effectdata)
 end
 
-usermessage.Hook("NextRespawn", function(um)
-	MySelf.NextSpawnTime = um:ReadFloat()
+net.Receive("NextRespawn", function()
+	MySelf.NextSpawnTime = net.ReadFloat()
 end)
 
-usermessage.Hook("RecInfo", function(um)
-	local ent = um:ReadEntity()
+net.Receive("RecInfo", function()
+	local ent = net.ReadEntity()
 	if ent:IsValid() and ent.Info then
-		ent:Info(um)
+		ent:Info()
 	end
 end)
 
@@ -1559,9 +1559,9 @@ local function play(ent, snd)
 	end
 end
 
-usermessage.Hook("SI", function(um)
-	local ent = um:ReadEntity()
-	local tab = Spells[um:ReadShort()]
+net.Receive("SI", function()
+	local ent = net.ReadEntity()
+	local tab = Spells[net.ReadInt(16)]
 	if tab and ent:IsValid() then
 		for i, word in ipairs(tab.Words) do
 			timer.Simple(i * 0.1 - 0.1, function() play(ent, word) end)

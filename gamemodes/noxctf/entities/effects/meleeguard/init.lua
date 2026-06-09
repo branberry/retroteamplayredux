@@ -40,7 +40,7 @@ function EFFECT:Think()
 			pos = ent:EyePos()
 		end
 
-		self.Entity:SetPos(pos)
+		self:SetPos(pos)
 	end
 
 	return CurTime() < self.DieTime

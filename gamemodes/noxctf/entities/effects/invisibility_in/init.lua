@@ -9,11 +9,11 @@ function EFFECT:Init(data)
 
 	if EFFECT_QUALITY < 1 then return end
 
-	self.Entity:SetPos(target:GetPos() + Vector(0, 0, 16))
+	self:SetPos(target:GetPos() + Vector(0, 0, 16))
 
-	local emitter = ParticleEmitter(self.Entity:GetPos())
+	local emitter = ParticleEmitter(self:GetPos())
 	for i=0, 8 do
-		local particle = emitter:Add("sprites/light_glow02_add", self.Entity:GetPos() + Vector(math.Rand(-16, 16), math.Rand(-16, 16), math.Rand(-16, 48)))
+		local particle = emitter:Add("sprites/light_glow02_add", self:GetPos() + Vector(math.Rand(-16, 16), math.Rand(-16, 16), math.Rand(-16, 48)))
 		particle:SetVelocity(VectorRand() * 6 + Vector(0, 0, math.Rand(0, 8)))
 		particle:SetDieTime(math.Rand(0.25, 0.75))
 		particle:SetStartAlpha(192)
@@ -28,7 +28,7 @@ function EFFECT:Init(data)
 	if render.GetDXLevel() < 90 then emitter:Finish() return end
 
 	for i=0, 2 do
-		local particle = emitter:Add("sprites/heatwave", self.Entity:GetPos() + (VectorRand() * 24) + Vector(0, 0, math.Rand(8, 32)))
+		local particle = emitter:Add("sprites/heatwave", self:GetPos() + (VectorRand() * 24) + Vector(0, 0, math.Rand(8, 32)))
 		particle:SetVelocity(VectorRand() * math.random(2, 4) + Vector(0, 0, math.Rand(64, 128)) + (target:GetVelocity() / 3))
 		particle:SetDieTime(math.Rand(1, 0.35))
 		particle:SetStartAlpha(255)
@@ -39,7 +39,7 @@ function EFFECT:Init(data)
 	end
 
 	for i=0, 1 do
-		local particle = emitter:Add("sprites/heatwave", self.Entity:GetPos() + Vector(0, 0, math.Rand(8, 16)))
+		local particle = emitter:Add("sprites/heatwave", self:GetPos() + Vector(0, 0, math.Rand(8, 16)))
 		particle:SetVelocity(Vector(0, 0, math.Rand(64, 128)) + (target:GetVelocity() / 3))
 		particle:SetDieTime(math.Rand(1, 0.35))
 		particle:SetStartAlpha(255)

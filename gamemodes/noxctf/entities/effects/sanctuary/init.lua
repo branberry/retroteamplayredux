@@ -10,7 +10,7 @@ function EFFECT:Init(data)
 		self.Col = color_white
 	end
 
-	self.Entity:SetRenderBounds(Vector(-256, -256, -256), Vector(256, 256, 256))
+	self:SetRenderBounds(Vector(-256, -256, -256), Vector(256, 256, 256))
 
 	sound.Play("weapons/physcannon/physcannon_charge.wav", pos, 74, 42)
 

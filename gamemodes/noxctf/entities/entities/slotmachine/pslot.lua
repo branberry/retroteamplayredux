@@ -1,5 +1,5 @@
-function pSlotMachine(data)
-	local machine = data:ReadEntity()
+function pSlotMachine()
+	local machine = net.ReadEntity()
 	local bet = machine.MinBet
 	local started = true
 
@@ -123,4 +123,4 @@ function pSlotMachine(data)
 	
 	surface.PlaySound("buttons/bell1.wav")
 end
-usermessage.Hook("openslotwindow", pSlotMachine)
+net.Receive("openslotwindow", pSlotMachine)

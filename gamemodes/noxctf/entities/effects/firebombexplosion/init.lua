@@ -124,19 +124,19 @@ function EFFECT:Init(data)
 
 	ExplosiveEffect(pos, 300, 150, DMGTYPE_FIRE)
 
-	self.Entity:SetModel("models/Combine_Helicopter/helicopter_bomb01.mdl")
-	self.Entity:SetRenderBoundsWS(pos + Vector(-768, -768, -768), pos + Vector(768, 768, 768))
+	self:SetModel("models/Combine_Helicopter/helicopter_bomb01.mdl")
+	self:SetRenderBoundsWS(pos + Vector(-768, -768, -768), pos + Vector(768, 768, 768))
 end
 
 function EFFECT:Think()
 	local ft = FrameTime()
 	self.Size = self.Size + ft * self.Size * 2.25
-	self.Entity:SetAngles(Angle(0, self:GetAngles().yaw + ft * 360, 0))
+	self:SetAngles(Angle(0, self:GetAngles().yaw + ft * 360, 0))
 	return self.Size < 38
 end
 
 function EFFECT:Render()
-	local ent = self.Entity
+	local ent = self
 	local siz = self.Size
 
 	ent:SetRenderMode(RENDERMODE_TRANSALPHA)

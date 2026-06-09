@@ -21,7 +21,7 @@ function ENT:Initialize()
 
 	self.LstThnk = CurTime()
 
-	self:SetNetworkedInt("brit", 255)
+	self:SetNWInt("brit", 255)
 end
 
 function ENT:AcceptInput(name, activator, caller)
@@ -52,7 +52,7 @@ function ENT:Think()
 		local brightness = math.ceil(math.max(self.Mana * 5.1, 30))
 		if self.LastBrightness ~= math.ceil(brightness * 0.1) then
 			self.LastBrightness = brightness
-			self:SetNetworkedInt("brit", brightness)
+			self:SetNWInt("brit", brightness)
 		end
 	end
 
@@ -85,7 +85,7 @@ function ENT:Touch(ent, drain)
 			local brightness = math.ceil(math.max((self.Mana / self.MaxMana) * 255, 30))
 			if self.LastBrightness ~= math.ceil(brightness*0.1) then
 				self.LastBrightness = brightness
-				self:SetNetworkedInt("brit", brightness)
+				self:SetNWInt("brit", brightness)
 			end
 
 			self.LstThnk = CurTime()
@@ -100,7 +100,7 @@ function ENT:Touch(ent, drain)
 			local brightness = math.ceil(math.max((self.Mana / self.MaxMana) * 255, 30))
 			if self.LastBrightness ~= math.ceil(brightness*0.1) then
 				self.LastBrightness = brightness
-				self:SetNetworkedInt("brit", brightness)
+				self:SetNWInt("brit", brightness)
 			end
 
 			self.LstThnk = CurTime()

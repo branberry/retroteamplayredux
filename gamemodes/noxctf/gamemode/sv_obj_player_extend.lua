@@ -29,10 +29,10 @@ function meta:CustomGesture(gesture)
 	if not gesture then return end
 	--self:DoAnimationEvent(gesture)
 	self:AnimRestartGesture(GESTURE_SLOT_CUSTOM, gesture, true)
-	umsg.Start("cusges")
-		umsg.Entity(self)
-		umsg.Short(gesture)
-	umsg.End()
+	net.Start("cusges")
+		net.WriteEntity(self)
+		net.WriteInt(gesture, 16)
+	net.Broadcast()
 end
 
 function meta:SendSound(snd)
@@ -221,30 +221,30 @@ function meta:SetTeam(id)
 end
 
 function meta:LMR(int, args)
-	umsg.Start("lmr", self)
-		umsg.Short(int)
-		umsg.String(args or "")
-	umsg.End()
+	net.Start("lmr")
+		net.WriteInt(int, 16)
+		net.WriteString(args or "")
+	net.Send(self)
 end
 
 function meta:LMG(int, args)
-	umsg.Start("lmg", self)
-		umsg.Short(int)
-		umsg.String(args or "")
-	umsg.End()
+	net.Start("lmg")
+		net.WriteInt(int, 16)
+		net.WriteString(args or "")
+	net.Send(self)
 end
 
 function meta:LM(int, args)
-	umsg.Start("lm", self)
-		umsg.Short(int)
-		umsg.String(args or "")
-	umsg.End()
+	net.Start("lm")
+		net.WriteInt(int, 16)
+		net.WriteString(args or "")
+	net.Send(self)
 end
 
 function meta:SendLocalPlayerSpawn()
-	umsg.Start("sp", self)
-		umsg.Short(self:GetPlayerClass())
-	umsg.End()
+	net.Start("sp")
+		net.WriteInt(self:GetPlayerClass(), 16)
+	net.Send(self)
 end
 
 function meta:SetLastAttacker(attacker)
@@ -447,10 +447,10 @@ function meta:ProcessDamage(attacker, inflictor, dmginfo)
 end
 
 function meta:DI(spellid, ttime)
-	umsg.Start("DI", self)
-		umsg.Short(spellid)
-		umsg.Float(ttime)
-	umsg.End()
+	net.Start("DI")
+		net.WriteInt(spellid, 16)
+		net.WriteFloat(ttime)
+	net.Send(self)
 end
 
 function meta:IsCarrying()
@@ -504,7 +504,7 @@ function meta:AddOffense(amount)
 		self:AddPKV("AssaultOffense", amount)
 	end
 
-	--self:SetNetworkedString("tpstats", self.KillsThisRound.."@"..self.AssistsThisRound.."@"..self.OffenseThisRound.."@"..self.DefenseThisRound)
+	--self:SetNWString("tpstats", self.KillsThisRound.."@"..self.AssistsThisRound.."@"..self.OffenseThisRound.."@"..self.DefenseThisRound)
 
 	if NDB then
 		for amount, award in pairs(OffenseAwards) do
@@ -528,7 +528,7 @@ DefenseAwards[100] = "Ultimate_Defense"
 function meta:AddDefense(amount)
 	local newdef = self.DefenseThisRound + amount
 	self.DefenseThisRound = newdef
-	self:SetNetworkedString("tpstats", self.KillsThisRound.."@"..self.AssistsThisRound.."@"..self.OffenseThisRound.."@"..self.DefenseThisRound)
+	self:SetNWString("tpstats", self.KillsThisRound.."@"..self.AssistsThisRound.."@"..self.OffenseThisRound.."@"..self.DefenseThisRound)
 
 	if NDB then
 		self:AddPKV("AssaultDefense", amount)
@@ -549,7 +549,7 @@ function meta:AddAssists(amount)
 		self:AddPKV("TeamPlayAssists", amount)
 	end
 
-	self:SetNetworkedString("tpstats", self.KillsThisRound.."@"..self.AssistsThisRound.."@"..self.OffenseThisRound.."@"..self.DefenseThisRound)
+	self:SetNWString("tpstats", self.KillsThisRound.."@"..self.AssistsThisRound.."@"..self.OffenseThisRound.."@"..self.DefenseThisRound)
 end
 
 function meta:AddKills(amount)
@@ -559,7 +559,7 @@ function meta:AddKills(amount)
 		self:AddPKV("CTFKills", amount)
 	end
 
-	self:SetNetworkedString("tpstats", self.KillsThisRound.."@"..self.AssistsThisRound.."@"..self.OffenseThisRound.."@"..self.DefenseThisRound)
+	self:SetNWString("tpstats", self.KillsThisRound.."@"..self.AssistsThisRound.."@"..self.OffenseThisRound.."@"..self.DefenseThisRound)
 end
 
 --Necromancer stuff

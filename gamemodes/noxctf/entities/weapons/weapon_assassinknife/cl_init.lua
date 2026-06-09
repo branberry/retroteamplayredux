@@ -17,7 +17,7 @@ function SWEP:Initialize()
 end
 
 function SWEP:PrimaryAttack()
-	if CurTime() < self:GetNetworkedFloat("LastShootTime", -100) + self.Primary.Delay then return end
+	if CurTime() < self:GetNWFloat("LastShootTime", -100) + self.Primary.Delay then return end
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
 	local trace = self.Owner:TraceLine(62)
@@ -32,7 +32,7 @@ function SWEP:PrimaryAttack()
 
 	self.Owner:DoAttackEvent()
 
-	self:SetNetworkedFloat("LastShootTime", CurTime())
+	self:SetNWFloat("LastShootTime", CurTime())
 end
 
 function SWEP:CanPrimaryAttack()

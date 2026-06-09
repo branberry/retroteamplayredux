@@ -1,7 +1,7 @@
 function EFFECT:Init(data)
 	local pos = data:GetOrigin() + Vector(0, 0, 10)
 
-	self.Entity:SetRenderBounds(Vector(-500, -500, -144), Vector(500, 500, 144))
+	self:SetRenderBounds(Vector(-500, -500, -144), Vector(500, 500, 144))
 
 	local emitter = ParticleEmitter(pos)
 	emitter:SetNearClip(24, 32)

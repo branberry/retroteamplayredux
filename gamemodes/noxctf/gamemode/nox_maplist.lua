@@ -56,7 +56,7 @@ GM:AddMap("noxctf_valleycorners_v3", 		"Valley Corners V3")
 
 function GetNonExistantMaps()
 	for i, maptab in pairs(GM.MapList) do
-		if not file.Exists("../maps/"..maptab[1]..".bsp") then
+		if not file.Exists("maps/"..maptab[1]..".bsp", "GAME") then
 			print(maptab[1])
 		end
 	end

@@ -28,7 +28,7 @@ function EFFECT:Think()
 
 	if ent then
 		ent.Burnt = true
-		self.Entity:SetPos(ent:GetPos())
+		self:SetPos(ent:GetPos())
 		self.DoDraw = true
 		self.Ent = ent
 		local c = ent:GetColor()

@@ -19,7 +19,7 @@ end
 function EFFECT:Think()
 	if self.Ent:IsPlayer() and self.Ent:Alive() and CurTime() <= self.DieTime then
 		local pos = self.Ent:GetShootPos() + self.Ent:GetAimVector() * 32
-		self.Entity:SetPos(pos)
+		self:SetPos(pos)
 		self.Emitter:SetPos(pos)
 		return true
 	end

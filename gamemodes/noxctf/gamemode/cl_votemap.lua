@@ -17,8 +17,8 @@ function GM:GetGTVotes()
 	return numgtvotes
 end
 
-usermessage.Hook("recgtnumvotes", function(um)
-	numgtvotes[um:ReadString()] = um:ReadShort()
+net.Receive("recgtnumvotes", function()
+	numgtvotes[net.ReadString()] = net.ReadInt(16)
 end)
 
 hook.Add("Initialize", "GameTypeVotingInitialize", function()

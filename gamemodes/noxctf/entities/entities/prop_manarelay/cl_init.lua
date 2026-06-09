@@ -13,8 +13,8 @@ end
 function ENT:Think()
 end
 
-function ENT:Info(um)
-	local str = um:ReadString()
+function ENT:Info()
+	local str = net.ReadString()
 	if str == "deny" then
 		self.DeniedAccess = true
 		return

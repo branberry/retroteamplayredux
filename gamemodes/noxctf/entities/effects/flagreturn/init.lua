@@ -26,7 +26,7 @@ function EFFECT:Think()
 	else
 		self.Pos = self.Pos + Vector(0,0,FrameTime() * 180 * (self.StartTime - RealTime()))
 	end
-	self.Entity:SetPos(MySelf:GetShootPos() + MySelf:GetAimVector() * 12)
+	self:SetPos(MySelf:GetShootPos() + MySelf:GetAimVector() * 12)
 	return self.Pos:Distance(self.EndPos) >= 12
 end
 

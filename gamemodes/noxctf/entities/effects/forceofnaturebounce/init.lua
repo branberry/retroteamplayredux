@@ -13,7 +13,7 @@ function EFFECT:Init(data)
 
 	self.Tim = 0
 
-	self.Entity:SetRenderBounds(Vector(-64, -64, -64), Vector(64, 64, 64))
+	self:SetRenderBounds(Vector(-64, -64, -64), Vector(64, 64, 64))
 end
 
 function EFFECT:Think()

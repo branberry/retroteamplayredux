@@ -56,7 +56,7 @@ local function emptypaint(self)
 			draw.SimpleText(classtab.Name, "DefaultFontBold", wid * 0.4, mid, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 
-		local stats = string.Explode("@", pl:GetNetworkedString("tpstats", "0@0@0@0"))
+		local stats = string.Explode("@", pl:GetNWString("tpstats", "0@0@0@0"))
 		local kills = stats[1]
 		local assists = stats[2]
 		local offense = stats[3]

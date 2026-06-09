@@ -114,16 +114,16 @@ end
 
 function ENT:UpdateCrew()
 	if self:IsValid() then
-		umsg.Start("RecDSD")
-			umsg.Entity(self)
-			umsg.Entity(self.LastPilot)
-			umsg.Entity(self.LastLeftGunner)
-			umsg.Entity(self.LastRightGunner)
-			umsg.Entity(self.LastLeftPassenger1)
-			umsg.Entity(self.LastLeftPassenger2)
-			umsg.Entity(self.LastRightPassenger1)
-			umsg.Entity(self.LastRightPassenger2)
-		umsg.End()
+		net.Start("RecDSD")
+			net.WriteEntity(self)
+			net.WriteEntity(self.LastPilot)
+			net.WriteEntity(self.LastLeftGunner)
+			net.WriteEntity(self.LastRightGunner)
+			net.WriteEntity(self.LastLeftPassenger1)
+			net.WriteEntity(self.LastLeftPassenger2)
+			net.WriteEntity(self.LastRightPassenger1)
+			net.WriteEntity(self.LastRightPassenger2)
+		net.Broadcast()
 
 		local lastpilotindex = 0
 		if self.LastPilot:IsValid() then lastpilotindex = self.LastPilot:EntIndex() end

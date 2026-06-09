@@ -114,11 +114,11 @@ killicon.AddAlias("projectile_vulturebomb", "vehicle_noxvulture")
 
 language.Add("trigger_hurt_nox", "Environment")
 
-usermessage.Hook("PlayerKilledByPlayers", function(message)
-	local victim = message:ReadEntity()
-	local inflictor = message:ReadString()
-	local attacker = message:ReadEntity()
-	local attacker2 = message:ReadEntity()
+net.Receive("PlayerKilledByPlayers", function()
+	local victim = net.ReadEntity()
+	local inflictor = net.ReadString()
+	local attacker = net.ReadEntity()
+	local attacker2 = net.ReadEntity()
 
 	if victim:IsValid() and attacker:IsValid() and attacker2:IsValid() then
 		local attackername = attacker:Name()
@@ -129,10 +129,10 @@ usermessage.Hook("PlayerKilledByPlayers", function(message)
 	end
 end)
 
-usermessage.Hook("PlayerKilledByPlayer", function(message)
-	local victim = message:ReadEntity()
-	local inflictor = message:ReadString()
-	local attacker = message:ReadEntity()
+net.Receive("PlayerKilledByPlayer", function()
+	local victim = net.ReadEntity()
+	local inflictor = net.ReadString()
+	local attacker = net.ReadEntity()
 
 	if victim:IsValid() and attacker:IsValid() then
 		local attackername = attacker:Name()
@@ -142,9 +142,9 @@ usermessage.Hook("PlayerKilledByPlayer", function(message)
 	end
 end)
 
-usermessage.Hook("PlayerKilledSelf", function(message)
-	local victim = message:ReadEntity()
-	local inflictor = message:ReadString()
+net.Receive("PlayerKilledSelf", function()
+	local victim = net.ReadEntity()
+	local inflictor = net.ReadString()
 
 	if victim:IsValid() then
 		GAMEMODE:AddDeathNotice(nil, nil, nil, nil, inflictor, victim:Name(), victim:Team())
@@ -152,10 +152,10 @@ usermessage.Hook("PlayerKilledSelf", function(message)
 	end
 end)
 
-usermessage.Hook("PlayerKilled", function(message)
-	local victim = message:ReadEntity()
-	local inflictor = message:ReadString()
-	local attacker = "#"..message:ReadString()
+net.Receive("PlayerKilled", function()
+	local victim = net.ReadEntity()
+	local inflictor = net.ReadString()
+	local attacker = "#"..net.ReadString()
 
 	if victim:IsValid() then
 		GAMEMODE:AddDeathNotice(attacker, -1, nil, nil, inflictor, victim:Name(), victim:Team())
@@ -166,7 +166,7 @@ end)
 local Deaths = {}
 
 function GM:AddDeathNotice(leftstring, leftteam, assiststring, assistteam, inflictorstring, rightstring, rightteam)
-	local Death = {time = RealTime() + GetConVarNumber("hud_deathnotice_time"),
+	local Death = {time = RealTime() + GetConVar("hud_deathnotice_time"):GetFloat(),
 	left = leftstring,
 	right = rightstring,
 	assist = assiststring,

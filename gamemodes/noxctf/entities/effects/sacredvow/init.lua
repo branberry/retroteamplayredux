@@ -1,6 +1,6 @@
 function EFFECT:Init(effectdata)
 	self.Ent = effectdata:GetEntity()
-	self.Entity:SetRenderBounds(Vector(-200, -200, -200), Vector(200, 200, 200))
+	self:SetRenderBounds(Vector(-200, -200, -200), Vector(200, 200, 200))
 	self.DeathTime = CurTime() + 1
 end
 

@@ -28,15 +28,15 @@ util.PrecacheSound("vehicles/v8/vehicle_impact_heavy4.wav")
 util.PrecacheSound("npc/strider/strider_minigun2.wav")
 
 function ENT:GetThrust()
-	return self:GetNetworkedFloat("thrust", 0)
+	return self:GetNWFloat("thrust", 0)
 end
 
 function ENT:GetVHealth()
-	return self:GetNetworkedInt("health")
+	return self:GetNWInt("health")
 end
 
 function ENT:SetVHealth(__int__)
-	self:SetNetworkedInt("health", math.floor(__int__))
+	self:SetNWInt("health", math.floor(__int__))
 end
 
 function ENT:GetMaxVHealth()
@@ -44,11 +44,11 @@ function ENT:GetMaxVHealth()
 end
 
 function ENT:Team()
-	return self:GetNetworkedInt("teamid", -1)
+	return self:GetNWInt("teamid", -1)
 end
 
 function ENT:SetTeam(__int__)
-	self:SetNetworkedInt("teamid", __int__)
+	self:SetNWInt("teamid", __int__)
 	self.TeamID = __int__
 	local c = team.GetColor(__int__)
 	self.PilotSeat:SetColor(Color(c.r, c.g, c.b, 255))

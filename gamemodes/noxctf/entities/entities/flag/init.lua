@@ -56,11 +56,11 @@ function ENT:Returned(pl, far)
 	local myteam = self:GetTeamID()
 	local flagpoint = team.TeamInfo[myteam].FlagPoint
 	if far then
-		umsg.Start("FlagReturnEffect")
-			umsg.Vector(self:GetPos())
-			umsg.Vector(flagpoint)
-			umsg.Short(myteam)
-		umsg.End()
+		net.Start("FlagReturnEffect")
+			net.WriteVector(self:GetPos())
+			net.WriteVector(flagpoint)
+			net.WriteInt(myteam, 16)
+		net.Broadcast()
 	end
 	self:SetSolid(SOLID_VPHYSICS)
 	self:SetPos(flagpoint)

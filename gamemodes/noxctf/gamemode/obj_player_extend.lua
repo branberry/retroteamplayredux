@@ -27,9 +27,9 @@ if CLIENT then
 		--self:DoAnimationEvent(gesture)
 		self:AnimRestartGesture(GESTURE_SLOT_CUSTOM, gesture, true)
 	end
-	usermessage.Hook("cusges", function(um)
-		local ent = um:ReadEntity()
-		local gesture = um:ReadShort()
+	net.Receive("cusges", function()
+		local ent = net.ReadEntity()
+		local gesture = net.ReadInt(16)
 		if ent:IsValid() then
 			ent:CustomGesture(gesture)
 		end
@@ -144,10 +144,10 @@ function meta:SetMana(mana, send)
 	self.ManaBase = ct
 
 	if send and SERVER then
-		umsg.Start("SLM", self)
-			umsg.Float(mana)
-			umsg.Float(ct)
-		umsg.End()
+		net.Start("SLM")
+			net.WriteFloat(mana)
+			net.WriteFloat(ct)
+		net.Send(self)
 	end
 end
 

@@ -91,11 +91,11 @@ function ENT:Reset(dontannounce)
 		self:GetOwner().Carrying = nil
 	end
 
-	umsg.Start("FlagReturnEffect")
-		umsg.Vector(self:GetPos())
-		umsg.Vector(flagpoint)
-		umsg.Short(TEAM_SPECTATOR)
-	umsg.End()
+	net.Start("FlagReturnEffect")
+		net.WriteVector(self:GetPos())
+		net.WriteVector(flagpoint)
+		net.WriteInt(TEAM_SPECTATOR, 16)
+	net.Broadcast()
 
 	self:SetSolid(SOLID_VPHYSICS)
 	self:SetPos(flagpoint)

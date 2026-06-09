@@ -13,7 +13,7 @@ function ENT:Draw()
 		self.Rotation = self.Rotation - 360
 	end
 
-	local fraction = self:GetNetworkedInt("brit", 255) / 255
+	local fraction = self:GetNWInt("brit", 255) / 255
 	local radius = math.cos(RealTime() * 8) * 32 * fraction + 64 * fraction
 	local whiteradius = math.sin(RealTime() * 8) * 8 + 16 * fraction
 	local vPos = self:GetPos()
@@ -35,8 +35,8 @@ function ENT:Initialize()
 	self.NextRequest = 0
 end
 
-function ENT:Info(um)
-	local str = um:ReadString()
+function ENT:Info()
+	local str = net.ReadString()
 	if str == "deny" then
 		self.DeniedAccess = true
 		return

@@ -71,10 +71,10 @@ local function Cast(sender, command, arguments)
 	else
 
 		timer.Simple(spelltab.Delay, function() ForwardSpell(SpellFunctions[spellid], sender, spellid) end)
-		umsg.Start("SI")
-			umsg.Entity(sender)
-			umsg.Short(spellid)
-		umsg.End()
+		net.Start("SI")
+			net.WriteEntity(sender)
+			net.WriteInt(spellid, 16)
+		net.Broadcast()
 		sender.NextSpell = CurTime() + spelltab.Delay + 0.01
 	end
 end

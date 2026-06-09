@@ -187,17 +187,17 @@ function ENT:Draw()
 	end
 end
 
-usermessage.Hook("RecDSD", function(um)
-	local ent = um:ReadEntity()
+net.Receive("RecDSD", function()
+	local ent = net.ReadEntity()
 
 	if ent:IsValid() then
-		ent.Pilot = um:ReadEntity() or NULL
-		ent.LeftGunner = um:ReadEntity() or NULL
-		ent.RightGunner = um:ReadEntity() or NULL
-		ent.LeftPassenger1 = um:ReadEntity() or NULL
-		ent.LeftPassenger2 = um:ReadEntity() or NULL
-		ent.RightPassenger1 = um:ReadEntity() or NULL
-		ent.RightPassenger2 = um:ReadEntity() or NULL
+		ent.Pilot = net.ReadEntity() or NULL
+		ent.LeftGunner = net.ReadEntity() or NULL
+		ent.RightGunner = net.ReadEntity() or NULL
+		ent.LeftPassenger1 = net.ReadEntity() or NULL
+		ent.LeftPassenger2 = net.ReadEntity() or NULL
+		ent.RightPassenger1 = net.ReadEntity() or NULL
+		ent.RightPassenger2 = net.ReadEntity() or NULL
 	end
 end)
 

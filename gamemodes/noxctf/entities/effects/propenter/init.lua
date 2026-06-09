@@ -11,7 +11,7 @@ function EFFECT:Init(data)
 
 	local pos = target:GetPos()
 
-	self.Entity:SetPos(pos)
+	self:SetPos(pos)
 	self.Alpha = 0.01
 	
 	local c = self.Target:GetColor()
