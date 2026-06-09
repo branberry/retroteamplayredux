@@ -10,7 +10,7 @@ function EFFECT:Init(data)
 	self:SetRenderBounds(Vector(-128,-128,-128), Vector(128, 128, 128))
 	
 	local ragdoll = self.Owner:GetRagdollEntity()
-	if ragdoll then
+	if IsValid(ragdoll) then
 		ragdoll:SetRenderMode(RENDERMODE_TRANSALPHA)
 	end
 end
@@ -25,7 +25,7 @@ function EFFECT:Think()
 
 	ent = ent:GetRagdollEntity()
 
-	if ent then
+	if IsValid(ent) then
 		if not self.Frozen then
 			self.Frozen = true
 			ent.Frozen = true

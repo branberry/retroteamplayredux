@@ -132,7 +132,7 @@ end
 
 function GM:GetRagdollEyes(pl)
 	local Ragdoll = pl:GetRagdollEntity()
-	if not Ragdoll then return end
+	if not IsValid(Ragdoll) then return end -- GetRagdollEntity can return a NULL entity, which is truthy
 
 	local att = Ragdoll:GetAttachment(Ragdoll:LookupAttachment("eyes"))
 	if att then

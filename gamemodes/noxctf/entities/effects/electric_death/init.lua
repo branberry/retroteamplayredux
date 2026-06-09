@@ -26,7 +26,7 @@ function EFFECT:Think()
 
 	local rag = ent:GetRagdollEntity()
 
-	if rag then
+	if IsValid(rag) then
 		rag.Electricuted = true
 
 		for i=1, rag:GetPhysicsObjectCount() do
@@ -64,7 +64,7 @@ function EFFECT:Render()
 
 	local ent = self.Owner:GetRagdollEntity()
 
-	if not ent then return end
+	if not IsValid(ent) then return end
 
 	local emitter = self.Emitter
 	for i=1, ent:GetPhysicsObjectCount() do

@@ -12,7 +12,7 @@ function ENT:Draw()
 		if owner:IsInvisible() then return end
 
 		local rag = owner:GetRagdollEntity()
-		if rag then
+		if IsValid(rag) then
 			owner = rag
 		elseif not owner:Alive() then return end
 

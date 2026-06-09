@@ -10,7 +10,7 @@ function ENT:Draw()
 	local owner = self:GetOwner()
 	if owner:IsValid() then
 		local rag = owner:GetRagdollEntity()
-		if rag then
+		if IsValid(rag) then
 			owner = rag
 		elseif not owner:Alive() or owner:IsInvisible() or owner:GetStatus("voidwalk") or owner:GetStatus("shadowstorm") then return end
 

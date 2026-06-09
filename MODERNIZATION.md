@@ -260,6 +260,37 @@ GM12 gamemodes were described by `info.txt`; GM13 gamemodes use `<gamemode>.txt`
 
 ---
 
+## 8. NULL-entity guards: `Player:GetRagdollEntity()` truthiness checks
+
+Found during in-game testing. On a modern client, `Player:GetRagdollEntity()` returns the **NULL entity** (not `nil`) when the player has no ragdoll. The NULL entity is *truthy* in Lua, so guards like `if rag then` pass and the next method call errors:
+
+```text
+[ERROR] gamemodes/noxctf/gamemode/shared.lua:137: Tried to use a NULL entity!
+  1. LookupAttachment - [C]:-1
+   2. GetRagdollEyes - gamemodes/noxctf/gamemode/shared.lua:137
+    3. unknown - gamemodes/noxctf/gamemode/cl_init.lua:451 (x1609)
+```
+
+The fix is to use `IsValid()`, which correctly returns `false` for both `nil` and NULL entities:
+
+```lua
+-- Before (gamemode/shared.lua) — errors every frame while spectating a corpse
+function GM:GetRagdollEyes(pl)
+    local Ragdoll = pl:GetRagdollEntity()
+    if not Ragdoll then return end
+    local att = Ragdoll:GetAttachment(Ragdoll:LookupAttachment("eyes"))
+    ...
+
+-- After
+function GM:GetRagdollEyes(pl)
+    local Ragdoll = pl:GetRagdollEntity()
+    if not IsValid(Ragdoll) then return end -- GetRagdollEntity can return a NULL entity, which is truthy
+    local att = Ragdoll:GetAttachment(Ragdoll:LookupAttachment("eyes"))
+    ...
+```
+
+The same truthiness pattern was fixed at every `GetRagdollEntity` call site (15 files): `gamemode/cl_init.lua` (`GM:CalcView` and the ragdoll-camera block), the `fire_death`, `ice_death`, and `electric_death` effects, and the nine `status_weapon_*` client entities that re-parent their weapon model onto the owner's ragdoll.
+
 ## What was checked and intentionally left alone
 
 While researching, several other GM13-era breaking changes were audited and found to be **already handled** or **not applicable**:

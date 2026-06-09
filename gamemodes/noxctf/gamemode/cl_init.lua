@@ -258,7 +258,7 @@ function ExplosiveEffect(pos, maxrange, damage, dmgtype)
 	local pos2 = pos + Vector(0, 0, 12)
 	for _, pl in pairs(player.GetAll()) do
 		local rag = pl:GetRagdollEntity()
-		if rag and not rag.Frozen then
+		if IsValid(rag) and not rag.Frozen then
 			local phys = rag:GetPhysicsObject()
 			if phys:IsValid() then
 				local physpos = phys:GetPos()
@@ -447,7 +447,7 @@ function GM:CalcView(pl, origin, angles, fov, znear, zfar)
 				return self:CalcVehicleFirstPersonView(par, veh, pl, origin, angles, fov, znear, zfar)
 			end
 		end
-	elseif pl:GetRagdollEntity() and pl:Alive() then
+	elseif IsValid(pl:GetRagdollEntity()) and pl:Alive() then
 		local rpos, rang = self:GetRagdollEyes(pl)
 		if rpos then
 			origin = rpos

@@ -12,7 +12,7 @@ function ENT:DrawTranslucent()
 	local owner = self:GetOwner()
 	if owner:IsValid() then
 		local rag = owner:GetRagdollEntity()
-		if rag then
+		if IsValid(rag) then
 			owner = rag
 		elseif not owner:Alive() or owner:IsInvisible() then return end
 
