@@ -10,6 +10,8 @@
 
 * [Steam workshop post](https://steamcommunity.com/sharedfiles/filedetails/?id=192091596)
 
+This codebase has been updated to run on current builds of Garry's Mod (legacy `umsg` networking replaced with the `net` library, removed/deprecated APIs fixed). See [MODERNIZATION.md](MODERNIZATION.md) for the full list of changes with examples.
+
 ## Install
 
 1. Put noxctf in to garrysmod/gamemodes folder.

@@ -87,7 +87,7 @@ local function SafeRemove(ent)
 end
 function ENT:OnRemove()
 	local seat = self.PilotSeat
-	if seat:IsValid() then --ValidEntity() : Find this so it can be reused here : if ValidEntity(seat) then
+	if IsValid(seat) then -- IsValid() is the modern replacement for the removed ValidEntity(), and is nil-safe
 		constraint.RemoveAll(seat)
 
 		timer.SimpleEx(1, SafeRemove, seat)

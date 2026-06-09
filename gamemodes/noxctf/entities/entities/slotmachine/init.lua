@@ -6,7 +6,7 @@ AddCSLuaFile("sh_meta.lua")
 include("shared.lua")
 
 --[[
-	Reason why I am using umsg is to send the client the entity's info 
+	Reason why I am using a net message is to send the client the entity's info 
 	in order for the VGUI to send the command back to the server via concommands. 
 
 	Pretty hacky or stupid? Yes.
